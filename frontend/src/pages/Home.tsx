@@ -2,10 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Play, Mic, Brain, Users, TrendingUp, Star, Building2, Settings } from 'lucide-react';
-import { useTheme } from '@/contexts/ThemeContext';
 
 const Home = () => {
-  const { isDark } = useTheme();
   const navigate = useNavigate();
 
   const handleTrySimulation = () => {
@@ -44,23 +42,17 @@ const Home = () => {
 
       {/* Watch How It Works Section */}
       <section id="how-it-works" className={`py-20 ${
-        isDark 
-          ? 'bg-gradient-to-br from-gray-950 via-gray-900 to-blue-950/30' 
-          : 'bg-gradient-to-br from-white via-blue-50/50 to-purple-50/50'
+        'bg-gradient-to-br from-white via-blue-50/50 to-purple-50/50'
       }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className={`text-4xl font-bold sm:text-5xl lg:text-6xl mb-6 ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}>
+            <h2 className={`text-4xl font-bold sm:text-5xl lg:text-6xl mb-6`}>
               Watch{' '}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 How It Works
               </span>
             </h2>
-            <p className={`text-xl max-w-3xl mx-auto ${
-              isDark ? 'text-gray-300' : 'text-gray-600'
-            }`}>
+            <p className={`text-xl max-w-3xl mx-auto`}>
               See how AI-powered sales training transforms your conversations in real-time
             </p>
           </div>
@@ -68,16 +60,12 @@ const Home = () => {
           {/* Video Placeholder */}
           <div className="max-w-4xl mx-auto">
             <div className={`relative rounded-2xl overflow-hidden shadow-2xl ${
-              isDark 
-                ? 'bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700' 
-                : 'bg-gradient-to-br from-white to-gray-100 border border-gray-200'
+              'bg-gradient-to-br from-white to-gray-100 border border-gray-200'
             }`}>
               <div className="aspect-video flex items-center justify-center">
                 {/* TODO: Replace with actual video embed */}
                 {/* Video URL placeholder: INSERT_VIDEO_URL_HERE */}
-                <div className={`text-center p-8 ${
-                  isDark ? 'text-gray-400' : 'text-gray-500'
-                }`}>
+                <div className={`text-center p-8`}>
                   <Play className="h-16 w-16 mx-auto mb-4 opacity-50" />
                   <p className="text-lg">Video will be embedded here</p>
                   <p className="text-sm mt-2 opacity-75">Coming soon...</p>
@@ -100,71 +88,65 @@ const Home = () => {
 
       {/* Features Teaser */}
       <section id="features" className={`py-16 ${
-        isDark ? 'bg-gray-900/50' : 'bg-gradient-to-b from-white to-gray-50'
+        'bg-gradient-to-b from-white to-gray-50'
       }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className={`hover:shadow-lg transition-shadow ${
-              isDark 
-                ? 'bg-gray-800/50 border-gray-700' 
-                : 'bg-white border-gray-200 shadow-sm hover:shadow-md'
+              'bg-white border-gray-200 shadow-sm hover:shadow-md'
             }`}>
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className={`p-2 rounded-lg ${
-                    isDark ? 'bg-blue-600/20' : 'bg-gradient-to-br from-blue-100 to-blue-200'
+                    'bg-gradient-to-br from-blue-100 to-blue-200'
                   }`}>
-                    <Mic className={`h-6 w-6 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
+                    <Mic className={`h-6 w-6`} />
                   </div>
-                  <CardTitle className={isDark ? 'text-white' : 'text-gray-900'}>Live AI Role-Play</CardTitle>
+                  <CardTitle>Live AI Role-Play</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <CardDescription className={isDark ? 'text-gray-300' : 'text-gray-600'}>
+                <CardDescription>
                   Engage realistic buyer personas in real time.
                 </CardDescription>
               </CardContent>
             </Card>
 
             <Card className={`hover:shadow-lg transition-shadow ${
-              isDark 
-                ? 'bg-gray-800/50 border-gray-700' 
-                : 'bg-white border-gray-200 shadow-sm hover:shadow-md'
+              'bg-white border-gray-200 shadow-sm hover:shadow-md'
             }`}>
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className={`p-2 rounded-lg ${
-                    isDark ? 'bg-purple-600/20' : 'bg-gradient-to-br from-purple-100 to-purple-200'
+                    'bg-gradient-to-br from-purple-100 to-purple-200'
                   }`}>
-                    <TrendingUp className={`h-6 w-6 ${isDark ? 'text-purple-400' : 'text-purple-600'}`} />
+                    <TrendingUp className={`h-6 w-6`} />
                   </div>
-                  <CardTitle className={isDark ? 'text-white' : 'text-gray-900'}>Voice Analytics</CardTitle>
+                  <CardTitle>Voice Analytics</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <CardDescription className={isDark ? 'text-gray-300' : 'text-gray-600'}>
+                <CardDescription>
                   Measure tone, confidence, pacing.
                 </CardDescription>
               </CardContent>
             </Card>
 
             <Card className={`hover:shadow-lg transition-shadow ${
-              isDark 
-                ? 'bg-gray-800/50 border-gray-700' 
-                : 'bg-white border-gray-200 shadow-sm hover:shadow-md'
+              'bg-white border-gray-200 shadow-sm hover:shadow-md'
             }`}>
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className={`p-2 rounded-lg ${
-                    isDark ? 'bg-green-600/20' : 'bg-gradient-to-br from-green-100 to-green-200'
+                    'bg-gradient-to-br from-green-100 to-green-200'
                   }`}>
-                    <Brain className={`h-6 w-6 ${isDark ? 'text-green-400' : 'text-green-600'}`} />
+                    <Brain className={`h-6 w-6`} />
                   </div>
-                  <CardTitle className={isDark ? 'text-white' : 'text-gray-900'}>Instant Debrief</CardTitle>
+                  <CardTitle>Instant Debrief</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <CardDescription className={isDark ? 'text-gray-300' : 'text-gray-600'}>
+                <CardDescription>
                   Get AI-generated tips and scripts.
                 </CardDescription>
               </CardContent>
@@ -175,21 +157,17 @@ const Home = () => {
 
       {/* How It Works Steps Section */}
       <section className={`py-20 ${
-        isDark ? 'bg-gray-950' : 'bg-white'
+        'bg-white'
       }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className={`text-4xl font-bold sm:text-5xl lg:text-6xl mb-6 ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}>
+            <h2 className={`text-4xl font-bold sm:text-5xl lg:text-6xl mb-6`}>
               Your Sales Coach{' '}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 in the Cloud
               </span>
             </h2>
-            <p className={`text-xl max-w-3xl mx-auto ${
-              isDark ? 'text-gray-300' : 'text-gray-600'
-            }`}>
+            <p className={`text-xl max-w-3xl mx-auto`}>
               Transform your sales skills with AI-powered training that adapts to your needs
             </p>
           </div>
@@ -202,14 +180,14 @@ const Home = () => {
                   <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
                     1
                   </div>
-                  <h2 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <h2 className={`text-3xl font-bold`}>
                     Choose Your Scenario
                   </h2>
                 </div>
-                <p className={`text-lg mb-6 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                <p className={`text-lg mb-6`}>
                   Pick from common objections, pricing negotiations, or customize your own. Our library includes scenarios for every industry and skill level.
                 </p>
-                <ul className={`space-y-2 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                <ul className={`space-y-2`}>
                   <li>• Cold calling simulations</li>
                   <li>• Objection handling practice</li>
                   <li>• Pricing negotiation scenarios</li>
@@ -217,18 +195,16 @@ const Home = () => {
                 </ul>
               </div>
               <Card className={`hover:shadow-lg transition-shadow ${
-                isDark 
-                  ? 'bg-gray-800/50 border-gray-700' 
-                  : 'bg-gradient-to-br from-white to-blue-50 border-blue-100 shadow-sm'
+                'bg-gradient-to-br from-white to-blue-50 border-blue-100 shadow-sm'
               }`}>
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <Settings className={`h-8 w-8 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
-                    <CardTitle className={isDark ? 'text-white' : 'text-gray-900'}>Scenario Library</CardTitle>
+                    <Settings className={`h-8 w-8`} />
+                    <CardTitle>Scenario Library</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className={isDark ? 'text-gray-300' : 'text-gray-600'}>
+                  <CardDescription>
                     Access hundreds of pre-built scenarios or create your own custom training situations.
                   </CardDescription>
                 </CardContent>
@@ -238,18 +214,16 @@ const Home = () => {
             {/* Step 2 */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <Card className={`lg:order-1 hover:shadow-lg transition-shadow ${
-                isDark 
-                  ? 'bg-gray-800/50 border-gray-700' 
-                  : 'bg-gradient-to-br from-white to-purple-50 border-purple-100 shadow-sm'
+                'bg-gradient-to-br from-white to-purple-50 border-purple-100 shadow-sm'
               }`}>
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <Mic className={`h-8 w-8 ${isDark ? 'text-purple-400' : 'text-purple-600'}`} />
-                    <CardTitle className={isDark ? 'text-white' : 'text-gray-900'}>Live AI Interaction</CardTitle>
+                    <Mic className={`h-8 w-8`} />
+                    <CardTitle>Live AI Interaction</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className={isDark ? 'text-gray-300' : 'text-gray-600'}>
+                  <CardDescription>
                     Our AI adapts its responses based on your conversation style and answers.
                   </CardDescription>
                 </CardContent>
@@ -259,14 +233,14 @@ const Home = () => {
                   <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
                     2
                   </div>
-                  <h2 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <h2 className={`text-3xl font-bold`}>
                     Talk to AI Client
                   </h2>
                 </div>
-                <p className={`text-lg mb-6 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                <p className={`text-lg mb-6`}>
                   Speak naturally. Our emotionally adaptive AI reacts in real time, providing realistic responses based on different buyer personas.
                 </p>
-                <ul className={`space-y-2 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                <ul className={`space-y-2`}>
                   <li>• Natural voice conversations</li>
                   <li>• Emotionally intelligent responses</li>
                   <li>• Multiple buyer personas</li>
@@ -282,14 +256,14 @@ const Home = () => {
                   <div className="w-12 h-12 bg-gradient-to-r from-pink-600 to-red-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
                     3
                   </div>
-                  <h2 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <h2 className={`text-3xl font-bold`}>
                     Improve with Feedback
                   </h2>
                 </div>
-                <p className={`text-lg mb-6 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                <p className={`text-lg mb-6`}>
                   Receive voice-analysis metrics and suggested responses. Track your progress over time and identify areas for improvement.
                 </p>
-                <ul className={`space-y-2 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                <ul className={`space-y-2`}>
                   <li>• Voice tone analysis</li>
                   <li>• Confidence scoring</li>
                   <li>• Pacing optimization</li>
@@ -297,18 +271,16 @@ const Home = () => {
                 </ul>
               </div>
               <Card className={`hover:shadow-lg transition-shadow ${
-                isDark 
-                  ? 'bg-gray-800/50 border-gray-700' 
-                  : 'bg-gradient-to-br from-white to-green-50 border-green-100 shadow-sm'
+                'bg-gradient-to-br from-white to-green-50 border-green-100 shadow-sm'
               }`}>
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <TrendingUp className={`h-8 w-8 ${isDark ? 'text-green-400' : 'text-green-600'}`} />
-                    <CardTitle className={isDark ? 'text-white' : 'text-gray-900'}>Analytics Dashboard</CardTitle>
+                    <TrendingUp className={`h-8 w-8`} />
+                    <CardTitle>Analytics Dashboard</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className={isDark ? 'text-gray-300' : 'text-gray-600'}>
+                  <CardDescription>
                     Detailed insights into your performance with actionable recommendations for improvement.
                   </CardDescription>
                 </CardContent>
@@ -320,47 +292,39 @@ const Home = () => {
 
       {/* Who It's For */}
       <section className={`py-16 ${
-        isDark ? 'bg-gray-950' : 'bg-gradient-to-b from-gray-50 to-white'
+        'bg-gradient-to-b from-gray-50 to-white'
       }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className={`text-3xl font-bold sm:text-4xl ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}>
+            <h2 className={`text-3xl font-bold sm:text-4xl`}>
               Built for Every Seller
             </h2>
-            <p className={`mt-4 text-lg ${
-              isDark ? 'text-gray-300' : 'text-gray-600'
-            }`}>
+            <p className={`mt-4 text-lg`}>
               From solo entrepreneurs to enterprise teams
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className={`text-center hover:shadow-lg transition-shadow ${
-              isDark 
-                ? 'bg-gray-800/50 border-gray-700' 
-                : 'bg-white border-gray-200 shadow-sm'
+              'bg-white border-gray-200 shadow-sm'
             }`}>
               <CardHeader>
                 <div className={`mx-auto p-3 rounded-full w-fit ${
-                  isDark ? 'bg-blue-600/20' : 'bg-gradient-to-br from-blue-100 to-blue-200'
+                  'bg-gradient-to-br from-blue-100 to-blue-200'
                 }`}>
-                  <Users className={`h-8 w-8 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
+                  <Users className={`h-8 w-8`} />
                 </div>
-                <CardTitle className={isDark ? 'text-white' : 'text-gray-900'}>Freelancers</CardTitle>
+                <CardTitle>Freelancers</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className={`mb-4 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <CardDescription className={`mb-4`}>
                   Pitch your services like a pro.
                 </CardDescription>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   className={
-                    isDark 
-                      ? 'border-gray-600 text-gray-300 hover:bg-gray-800' 
-                      : 'border-blue-200 text-blue-700 hover:bg-blue-50'
+                    'border-blue-200 text-blue-700 hover:bg-blue-50'
                   } 
                   asChild
                 >
@@ -370,29 +334,25 @@ const Home = () => {
             </Card>
 
             <Card className={`text-center hover:shadow-lg transition-shadow ${
-              isDark 
-                ? 'bg-gray-800/50 border-gray-700' 
-                : 'bg-white border-gray-200 shadow-sm'
+              'bg-white border-gray-200 shadow-sm'
             }`}>
               <CardHeader>
                 <div className={`mx-auto p-3 rounded-full w-fit ${
-                  isDark ? 'bg-green-600/20' : 'bg-gradient-to-br from-green-100 to-green-200'
+                  'bg-gradient-to-br from-green-100 to-green-200'
                 }`}>
-                  <Star className={`h-8 w-8 ${isDark ? 'text-green-400' : 'text-green-600'}`} />
+                  <Star className={`h-8 w-8`} />
                 </div>
-                <CardTitle className={isDark ? 'text-white' : 'text-gray-900'}>Interns & Entry-Level</CardTitle>
+                <CardTitle>Interns & Entry-Level</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className={`mb-4 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <CardDescription className={`mb-4`}>
                   Master your first sales call.
                 </CardDescription>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   className={
-                    isDark 
-                      ? 'border-gray-600 text-gray-300 hover:bg-gray-800' 
-                      : 'border-green-200 text-green-700 hover:bg-green-50'
+                    'border-green-200 text-green-700 hover:bg-green-50'
                   } 
                   asChild
                 >
@@ -402,29 +362,25 @@ const Home = () => {
             </Card>
 
             <Card className={`text-center hover:shadow-lg transition-shadow ${
-              isDark 
-                ? 'bg-gray-800/50 border-gray-700' 
-                : 'bg-white border-gray-200 shadow-sm'
+              'bg-white border-gray-200 shadow-sm'
             }`}>
               <CardHeader>
                 <div className={`mx-auto p-3 rounded-full w-fit ${
-                  isDark ? 'bg-purple-600/20' : 'bg-gradient-to-br from-purple-100 to-purple-200'
+                  'bg-gradient-to-br from-purple-100 to-purple-200'
                 }`}>
-                  <Building2 className={`h-8 w-8 ${isDark ? 'text-purple-400' : 'text-purple-600'}`} />
+                  <Building2 className={`h-8 w-8`} />
                 </div>
-                <CardTitle className={isDark ? 'text-white' : 'text-gray-900'}>Teams & Managers</CardTitle>
+                <CardTitle>Teams & Managers</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className={`mb-4 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <CardDescription className={`mb-4`}>
                   Scale coaching across your org.
                 </CardDescription>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   className={
-                    isDark 
-                      ? 'border-gray-600 text-gray-300 hover:bg-gray-800' 
-                      : 'border-purple-200 text-purple-700 hover:bg-purple-50'
+                    'border-purple-200 text-purple-700 hover:bg-purple-50'
                   } 
                   asChild
                 >
@@ -447,31 +403,27 @@ const Home = () => {
 
       {/* Pricing Preview */}
       <section id="pricing" className={`py-16 ${
-        isDark ? 'bg-gray-950' : 'bg-gradient-to-b from-gray-50 to-white'
+        'bg-gradient-to-b from-gray-50 to-white'
       }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className={`text-3xl font-bold sm:text-4xl mb-4 ${
-            isDark ? 'text-white' : 'text-gray-900'
-          }`}>
+          <h2 className={`text-3xl font-bold sm:text-4xl mb-4`}>
             Start free. Upgrade as you grow.
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-12">
             {/* Free Trial */}
             <Card className={
-              isDark 
-                ? 'bg-gray-800/50 border-gray-700' 
-                : 'bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow'
+              'bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow'
             }>
               <CardHeader className="text-center">
-                <CardTitle className={`text-2xl ${isDark ? 'text-white' : 'text-gray-900'}`}>Free Trial</CardTitle>
-                <CardDescription className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Up to 3 simulations</CardDescription>
-                <div className={`text-4xl font-bold mt-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <CardTitle className={`text-2xl`}>Free Trial</CardTitle>
+                <CardDescription className={`text-lg`}>Up to 3 simulations</CardDescription>
+                <div className={`text-4xl font-bold mt-4`}>
                   $0
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className={`text-left space-y-3 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <div className={`text-left space-y-3`}>
                   <p>• 3 Live Role-Plays – Try common objections, pricing talks & more</p>
                   <p>• Basic Voice Feedback – Instant insights on tone & pacing</p>
                   <p>• 2 AI Client Personas – Practice with two distinct buyer types</p>
@@ -488,19 +440,17 @@ const Home = () => {
 
             {/* Pro */}
             <Card className={`ring-2 ${
-              isDark 
-                ? 'bg-gray-800/50 border-gray-700 ring-blue-600' 
-                : 'bg-white border-blue-200 shadow-lg ring-blue-300 hover:shadow-xl transition-shadow'
+              'bg-white border-blue-200 shadow-lg ring-blue-300 hover:shadow-xl transition-shadow'
             }`}>
               <CardHeader className="text-center">
-                <CardTitle className={`text-2xl ${isDark ? 'text-white' : 'text-gray-900'}`}>Pro</CardTitle>
-                <CardDescription className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>30 simulations / month</CardDescription>
-                <div className={`text-4xl font-bold mt-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                  $29<span className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-500'}`}> / mo</span>
+                <CardTitle className={`text-2xl`}>Pro</CardTitle>
+                <CardDescription className={`text-lg`}>30 simulations / month</CardDescription>
+                <div className={`text-4xl font-bold mt-4`}>
+                  $29<span className={`text-lg`}> / mo</span>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className={`text-left space-y-3 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <div className={`text-left space-y-3`}>
                   <p>• 30 Live Role-Plays – Expand your practice scenarios</p>
                   <p>• Full Voice Analytics – Track tone, confidence, sentiment</p>
                   <p>• 5+ AI Personas & Custom Scenarios – Tailor practice to your deals</p>
@@ -517,19 +467,17 @@ const Home = () => {
 
             {/* Team */}
             <Card className={
-              isDark 
-                ? 'bg-gray-800/50 border-gray-700' 
-                : 'bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow'
+              'bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow'
             }>
               <CardHeader className="text-center">
-                <CardTitle className={`text-2xl ${isDark ? 'text-white' : 'text-gray-900'}`}>Team</CardTitle>
-                <CardDescription className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Per 5 users</CardDescription>
-                <div className={`text-4xl font-bold mt-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                  $99<span className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-500'}`}> / mo</span>
+                <CardTitle className={`text-2xl`}>Team</CardTitle>
+                <CardDescription className={`text-lg`}>Per 5 users</CardDescription>
+                <div className={`text-4xl font-bold mt-4`}>
+                  $99<span className={`text-lg`}> / mo</span>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className={`text-left space-y-3 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <div className={`text-left space-y-3`}>
                   <p>• Unlimited Simulations – Scale practice across your team</p>
                   <p>• Team & Manager Dashboard – Spot skills gaps & monitor progress</p>
                   <p>• Shared Scenario Library – Build and share best-practice scripts</p>
@@ -549,14 +497,10 @@ const Home = () => {
 
       {/* Footer CTA */}
       <section className={`py-16 ${
-        isDark 
-          ? 'bg-gradient-to-r from-blue-900/20 to-purple-900/20' 
-          : 'bg-gradient-to-r from-blue-100 to-purple-100'
+        'bg-gradient-to-r from-blue-100 to-purple-100'
       }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className={`text-3xl font-bold sm:text-4xl mb-4 ${
-            isDark ? 'text-white' : 'text-gray-900'
-          }`}>
+          <h2 className={`text-3xl font-bold sm:text-4xl mb-4`}>
             Ready to transform your sales game?
           </h2>
           <Button 

@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Mic, Square, Send, User, Bot, Lightbulb, ArrowLeft } from 'lucide-react';
 import ProgressIndicator from '@/components/ProgressIndicator';
-import { useTheme } from '@/contexts/ThemeContext';
 
 interface Message {
   type: 'user' | 'ai' | 'tip';
@@ -16,7 +15,6 @@ interface Message {
 
 const FreeTrialChat = () => {
   const navigate = useNavigate();
-  const { isDark } = useTheme();
   const [messages, setMessages] = useState<Message[]>([]);
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState('');
@@ -234,22 +232,16 @@ const FreeTrialChat = () => {
   }
 
   return (
-    <div className={`min-h-screen flex flex-col ${
-      isDark 
-        ? 'bg-gradient-to-br from-gray-950 via-gray-900 to-blue-950/30' 
-        : 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50'
-    }`}>
+    <div className={"min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"}>
       <div className="container mx-auto max-w-4xl py-6 flex-1 flex flex-col">
         <ProgressIndicator currentStep={4} totalSteps={4} />
         
         {/* Top Bar */}
-        <div className={`flex items-center justify-between p-4 rounded-lg mb-6 ${
-          isDark ? 'bg-gray-800/50 border border-gray-700' : 'bg-white/80 backdrop-blur-sm border border-gray-200'
-        }`}>
+        <div className="flex items-center justify-between p-4 rounded-lg mb-6 bg-white/80 border border-gray-200">
           <Button
             onClick={handleBack}
             variant="outline"
-            className="flex items-center gap-2 border-gray-600 text-white hover:bg-gray-800"
+            className="flex items-center gap-2 border-gray-600 text-white bg-gray-800 hover:bg-gray-900"
           >
             <ArrowLeft className="w-4 h-4" />
             Back
@@ -258,12 +250,12 @@ const FreeTrialChat = () => {
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
               <span className="text-2xl">👤</span>
-              <span className={isDark ? 'text-gray-200' : 'text-gray-700'}>
+              <span className="text-gray-700">
                 {simulatorData.voice || 'Male Voice'}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+              <span className="font-medium">
                 Persona: "{simulatorData.scenario || 'Budget Shopper'}"
               </span>
             </div>
@@ -271,16 +263,14 @@ const FreeTrialChat = () => {
           
           <Button 
             onClick={handleEndSession}
-            className="bg-black hover:bg-gray-800 text-white"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
           >
             End Session
           </Button>
         </div>
 
         {/* Chat Window - Main Column */}
-        <Card className={`flex-1 flex flex-col mb-6 ${
-          isDark ? 'bg-gray-800/50 border-gray-700' : 'bg-white/80 backdrop-blur-sm border-gray-200'
-        }`}>
+        <Card className="flex-1 flex flex-col mb-6 bg-white/80 border-gray-200">
           <CardContent className="flex-1 flex flex-col p-6">
             <div className="flex-1 overflow-y-auto space-y-4">
               {messages.map((message, index) => (
@@ -299,9 +289,7 @@ const FreeTrialChat = () => {
                       <div className={`max-w-[70%] p-4 rounded-lg flex items-start gap-3 ${
                         message.type === 'user'
                           ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                          : isDark 
-                            ? 'bg-gray-700 text-gray-200' 
-                            : 'bg-gray-100 text-gray-800'
+                          : 'bg-gray-100 text-gray-900'
                       }`}>
                         {message.type === 'user' ? (
                           <User className="w-5 h-5 mt-0.5 flex-shrink-0" />
@@ -321,19 +309,15 @@ const FreeTrialChat = () => {
 
         {/* Body Helper Text */}
         <div className="text-center mb-4">
-          <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+          <p className="text-sm text-gray-600">
             Press Record, speak your pitch, then Send to listen and get feedback.
           </p>
         </div>
 
         {/* Record Controls - Fixed Bottom Bar */}
-        <div className={`p-6 rounded-lg ${
-          isDark ? 'bg-gray-800/50 border border-gray-700' : 'bg-white/80 backdrop-blur-sm border border-gray-200'
-        }`}>
+        <div className="p-6 rounded-lg bg-white/80 border border-gray-200">
           {transcript && (
-            <div className={`p-3 rounded-lg border-2 border-dashed mb-4 ${
-              isDark ? 'border-gray-600 bg-gray-700 text-gray-200' : 'border-gray-300 bg-gray-50 text-gray-800'
-            }`}>
+            <div className="p-3 rounded-lg border-2 border-dashed mb-4 border-gray-300 bg-gray-100 text-gray-900">
               <p className="text-sm font-medium mb-1">Your message:</p>
               <p>{transcript}</p>
             </div>
@@ -354,11 +338,9 @@ const FreeTrialChat = () => {
 
       {/* End Session Dialog */}
       <Dialog open={showEndSessionDialog} onOpenChange={setShowEndSessionDialog}>
-        <DialogContent className={`${
-          isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-        }`}>
+        <DialogContent className="bg-white border-gray-200">
           <DialogHeader>
-            <DialogTitle className={isDark ? 'text-white' : 'text-gray-900'}>
+            <DialogTitle className="text-gray-900">
               Name Your Session
             </DialogTitle>
           </DialogHeader>
@@ -367,18 +349,14 @@ const FreeTrialChat = () => {
               placeholder="Enter session name..."
               value={sessionName}
               onChange={(e) => setSessionName(e.target.value)}
-              className={`${
-                isDark 
-                  ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
-                  : 'bg-white border-gray-300 text-gray-900'
-              }`}
+              className="bg-gray-100 border-gray-300 text-gray-900 placeholder-gray-500"
             />
           </div>
           <DialogFooter>
             <Button
               variant="outline"
               onClick={() => setShowEndSessionDialog(false)}
-              className="border-gray-600 text-white hover:bg-gray-700"
+              className="border-gray-300 text-gray-900 hover:bg-gray-100"
             >
               Cancel
             </Button>

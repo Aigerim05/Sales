@@ -1,10 +1,8 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Plus, MessageSquare, Calendar, Clock, Send, Lightbulb } from 'lucide-react';
-import { useTheme } from '@/contexts/ThemeContext';
 
 interface SimulationRecord {
   id: string;
@@ -20,7 +18,6 @@ interface SimulationRecord {
 
 const Account = () => {
   const navigate = useNavigate();
-  const { isDark } = useTheme();
   const [simulations, setSimulations] = useState<SimulationRecord[]>([]);
   const [selectedSimulation, setSelectedSimulation] = useState<SimulationRecord | null>(null);
 
@@ -52,7 +49,7 @@ const Account = () => {
     } else if (message.startsWith('[Tip]')) {
       return 'bg-yellow-100 border border-yellow-300 text-yellow-800';
     }
-    return isDark ? 'bg-gray-700 text-gray-200' : 'bg-gray-50 text-gray-800';
+    return 'bg-gray-50 text-gray-800';
   };
 
   const renderMessage = (message: string, index: number) => {
@@ -85,47 +82,36 @@ const Account = () => {
 
   if (selectedSimulation) {
     return (
-      <div className={`min-h-screen py-12 px-4 ${
-        isDark 
-          ? 'bg-gradient-to-br from-gray-950 via-gray-900 to-blue-950/30' 
-          : 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50'
-      }`}>
+      <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
         <div className="container mx-auto max-w-4xl">
           <div className="flex items-center justify-between mb-8">
             <Button 
               onClick={handleBackToList}
               variant="outline"
-              className={`${isDark ? 'border-gray-600' : 'border-gray-300'} text-white`}
+              className="border-gray-300 text-white bg-gray-800 hover:bg-gray-900"
             >
               ← Back to Simulations
             </Button>
-            <h1 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            <h1 className="text-3xl font-bold text-gray-900">
               Simulation Script
             </h1>
             <div />
           </div>
 
-          <Card className={`${
-            isDark 
-              ? 'bg-gray-800/50 border-gray-700' 
-              : 'bg-white/80 backdrop-blur-sm border-gray-200 shadow-lg'
-          }`}>
+          <Card className="bg-white/80 border-gray-200">
             <CardHeader>
-              <CardTitle className={`${isDark ? 'text-white' : 'text-gray-900'}`}>
+              <CardTitle className="text-gray-900">
                 {selectedSimulation.scenario} - {selectedSimulation.date}
               </CardTitle>
-              <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+              <p className="text-gray-600">
                 Duration: {selectedSimulation.duration}
               </p>
-              
               {/* Simulation Settings */}
-              <div className={`mt-4 p-4 rounded-lg border ${
-                isDark ? 'border-gray-600 bg-gray-700/50' : 'border-gray-200 bg-gray-50'
-              }`}>
-                <h3 className={`font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              <div className="mt-4 p-4 rounded-lg border border-gray-200">
+                <h3 className="font-semibold mb-2 text-gray-900">
                   Simulation Settings:
                 </h3>
-                <div className={`space-y-1 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <div className="space-y-1 text-sm text-gray-600">
                   <p><span className="font-medium">Voice:</span> {selectedSimulation.voice || 'Not specified'}</p>
                   <p><span className="font-medium">Persona:</span> {selectedSimulation.persona || 'Not specified'}</p>
                   <p><span className="font-medium">Customer Scenario:</span> {selectedSimulation.customerScenario || 'Not specified'}</p>
@@ -143,7 +129,7 @@ const Account = () => {
 
           {/* Send Script Button - Fixed at bottom right */}
           <div className="fixed bottom-6 right-6">
-            <Button className="bg-black hover:bg-gray-800 text-white px-6 py-3 flex items-center gap-2">
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 flex items-center gap-2">
               <Send className="w-5 h-5" />
               Send Script
             </Button>
@@ -154,14 +140,10 @@ const Account = () => {
   }
 
   return (
-    <div className={`min-h-screen py-12 px-4 ${
-      isDark 
-        ? 'bg-gradient-to-br from-gray-950 via-gray-900 to-blue-950/30' 
-        : 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50'
-    }`}>
+    <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <div className="container mx-auto max-w-6xl">
         <div className="flex items-center justify-between mb-8">
-          <h1 className={`text-4xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+          <h1 className="text-4xl font-bold text-gray-900">
             My <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Simulations
             </span>
@@ -177,13 +159,11 @@ const Account = () => {
 
         {simulations.length === 0 ? (
           <div className="text-center py-16">
-            <MessageSquare className={`w-24 h-24 mx-auto mb-6 ${
-              isDark ? 'text-gray-600' : 'text-gray-400'
-            }`} />
-            <h2 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            <MessageSquare className="w-24 h-24 mx-auto mb-6 text-gray-600" />
+            <h2 className="text-2xl font-bold mb-4 text-gray-900">
               No simulations yet
             </h2>
-            <p className={`text-lg mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+            <p className="text-lg mb-8 text-gray-600">
               Start your first AI sales simulation to begin building your conversation history.
             </p>
             <Button 
@@ -198,35 +178,25 @@ const Account = () => {
             {simulations.map((simulation) => (
               <Card 
                 key={simulation.id}
-                className={`cursor-pointer transition-all hover:shadow-lg ${
-                  isDark 
-                    ? 'bg-gray-800/50 border-gray-700 hover:bg-gray-800' 
-                    : 'bg-white/80 backdrop-blur-sm border-gray-200 hover:shadow-xl'
-                }`}
+                className="cursor-pointer transition-all hover:shadow-lg bg-white/80 border-gray-200 hover:bg-white"
                 onClick={() => handleViewTranscript(simulation)}
               >
                 <CardHeader>
-                  <CardTitle className={`text-lg ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <CardTitle className="text-lg text-gray-900">
                     {simulation.scenario}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    <div className={`flex items-center gap-2 ${
-                      isDark ? 'text-gray-300' : 'text-gray-600'
-                    }`}>
+                    <div className="flex items-center gap-2 text-gray-600">
                       <Calendar className="w-4 h-4" />
                       <span>{simulation.date}</span>
                     </div>
-                    <div className={`flex items-center gap-2 ${
-                      isDark ? 'text-gray-300' : 'text-gray-600'
-                    }`}>
+                    <div className="flex items-center gap-2 text-gray-600">
                       <Clock className="w-4 h-4" />
                       <span>{simulation.duration}</span>
                     </div>
-                    <div className={`flex items-center gap-2 ${
-                      isDark ? 'text-gray-300' : 'text-gray-600'
-                    }`}>
+                    <div className="flex items-center gap-2 text-gray-600">
                       <MessageSquare className="w-4 h-4" />
                       <span>{simulation.transcript.length} messages</span>
                     </div>
