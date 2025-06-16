@@ -2,23 +2,18 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { Mic, Square, Send, User, Bot, Lightbulb, ArrowLeft } from 'lucide-react';
 import ProgressIndicator from '@/components/ProgressIndicator';
-
-interface Message {
-  type: 'user' | 'ai' | 'tip';
-  content: string;
-  timestamp: number;
-}
+import { Message } from '@/types/Message';
+import ChatMessage from './ChatMessage';
+import EndSessionDialog from './EndSessionDialog';
+import RecordControls from './RecordControls';
 
 const FreeTrialChat = () => {
   const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([]);
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState('');
-  const [simulatorData, setSimulatorData] = useState<any>(null);
+  // const [simulatorData, setSimulatorData] = useState<any>(null);
   const [sessionStartTime] = useState(Date.now());
   const [showEndSessionDialog, setShowEndSessionDialog] = useState(false);
   const [sessionName, setSessionName] = useState('');
@@ -193,7 +188,7 @@ const FreeTrialChat = () => {
     // Save simulation to history - including tips
     const simulationRecord = {
       id: Date.now().toString(),
-      date: new Date().toLocaleDateString(),
+      date: new Date(sessionStartTime).toLocaleDateString(),
       duration: `${duration} minutes`,
       scenario: sessionName.trim(),
       transcript: messages.map(m => {
@@ -235,7 +230,6 @@ const FreeTrialChat = () => {
     <div className={"min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"}>
       <div className="container mx-auto max-w-4xl py-6 flex-1 flex flex-col">
         <ProgressIndicator currentStep={4} totalSteps={4} />
-        
         {/* Top Bar */}
         <div className="flex items-center justify-between p-4 rounded-lg mb-6 bg-white/80 border border-gray-200">
           <Button
@@ -243,10 +237,10 @@ const FreeTrialChat = () => {
             variant="outline"
             className="flex items-center gap-2 border-gray-600 text-white bg-gray-800 hover:bg-gray-900"
           >
-            <ArrowLeft className="w-4 h-4" />
+            {/* @ts-ignore */}
+            <span className="w-4 h-4">←</span>
             Back
           </Button>
-          
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
               <span className="text-2xl">👤</span>
@@ -260,7 +254,6 @@ const FreeTrialChat = () => {
               </span>
             </div>
           </div>
-          
           <Button 
             onClick={handleEndSession}
             className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
@@ -268,108 +261,40 @@ const FreeTrialChat = () => {
             End Session
           </Button>
         </div>
-
         {/* Chat Window - Main Column */}
         <Card className="flex-1 flex flex-col mb-6 bg-white/80 border-gray-200">
           <CardContent className="flex-1 flex flex-col p-6">
             <div className="flex-1 overflow-y-auto space-y-4">
               {messages.map((message, index) => (
-                <div key={index}>
-                  {message.type === 'tip' ? (
-                    // Agent Coach Tips - Helper bubbles
-                    <div className="flex justify-center my-4">
-                      <div className="bg-yellow-100 border border-yellow-300 text-yellow-800 px-4 py-2 rounded-full flex items-center gap-2 max-w-md">
-                        <Lightbulb className="w-4 h-4" />
-                        <span className="text-sm font-medium">[Tip] {message.content}</span>
-                      </div>
-                    </div>
-                  ) : (
-                    // Conversation Bubbles
-                    <div className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`max-w-[70%] p-4 rounded-lg flex items-start gap-3 ${
-                        message.type === 'user'
-                          ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                          : 'bg-gray-100 text-gray-900'
-                      }`}>
-                        {message.type === 'user' ? (
-                          <User className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                        ) : (
-                          <Bot className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                        )}
-                        <span>{message.content}</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <ChatMessage key={index} message={message} />
               ))}
               <div ref={messagesEndRef} />
             </div>
           </CardContent>
         </Card>
-
         {/* Body Helper Text */}
         <div className="text-center mb-4">
           <p className="text-sm text-gray-600">
             Press Record, speak your pitch, then Send to listen and get feedback.
           </p>
         </div>
-
         {/* Record Controls - Fixed Bottom Bar */}
-        <div className="p-6 rounded-lg bg-white/80 border border-gray-200">
-          {transcript && (
-            <div className="p-3 rounded-lg border-2 border-dashed mb-4 border-gray-300 bg-gray-100 text-gray-900">
-              <p className="text-sm font-medium mb-1">Your message:</p>
-              <p>{transcript}</p>
-            </div>
-          )}
-
-          <div className="flex justify-center">
-            <Button
-              onClick={handleToggleRecording}
-              className={`bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 text-lg font-medium ${
-                isRecording ? 'animate-pulse' : ''
-              }`}
-            >
-              {getButtonText()}
-            </Button>
-          </div>
-        </div>
+        <RecordControls
+          transcript={transcript}
+          isRecording={isRecording}
+          onToggleRecording={handleToggleRecording}
+          getButtonText={getButtonText}
+        />
       </div>
-
       {/* End Session Dialog */}
-      <Dialog open={showEndSessionDialog} onOpenChange={setShowEndSessionDialog}>
-        <DialogContent className="bg-white border-gray-200">
-          <DialogHeader>
-            <DialogTitle className="text-gray-900">
-              Name Your Session
-            </DialogTitle>
-          </DialogHeader>
-          <div className="py-4">
-            <Input
-              placeholder="Enter session name..."
-              value={sessionName}
-              onChange={(e) => setSessionName(e.target.value)}
-              className="bg-gray-100 border-gray-300 text-gray-900 placeholder-gray-500"
-            />
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setShowEndSessionDialog(false)}
-              className="border-gray-300 text-gray-900 hover:bg-gray-100"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleSaveSession}
-              disabled={!sessionName.trim()}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
-            >
-              Save Session
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <EndSessionDialog
+        open={showEndSessionDialog}
+        onOpenChange={setShowEndSessionDialog}
+        sessionName={sessionName}
+        setSessionName={setSessionName}
+        onSave={handleSaveSession}
+        onCancel={() => setShowEndSessionDialog(false)}
+      />
     </div>
   );
 };
