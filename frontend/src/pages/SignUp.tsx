@@ -1,10 +1,41 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const SignUp = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch('http://localhost:8000/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.detail || 'Registration failed');
+      }
+      const data = await res.json();
+      localStorage.setItem('access_token', data.access_token);
+      navigate('/');
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-indigo-200 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-xl bg-white/90 backdrop-blur-sm border-white/20 shadow-2xl">
@@ -15,36 +46,38 @@ const SignUp = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-8 px-10 pb-10">
-          <div className="space-y-4">
-            <Label htmlFor="name" className="text-gray-700 text-lg font-medium">Full Name</Label>
-            <Input
-              id="name"
-              type="text"
-              placeholder="Enter your full name"
-              className="bg-white/80 border-gray-300 text-gray-900 placeholder-gray-500 h-14 text-lg focus:border-blue-500 focus:ring-blue-500"
-            />
-          </div>
-          <div className="space-y-4">
-            <Label htmlFor="email" className="text-gray-700 text-lg font-medium">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="Enter your email"
-              className="bg-white/80 border-gray-300 text-gray-900 placeholder-gray-500 h-14 text-lg focus:border-blue-500 focus:ring-blue-500"
-            />
-          </div>
-          <div className="space-y-4">
-            <Label htmlFor="password" className="text-gray-700 text-lg font-medium">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="Create a password"
-              className="bg-white/80 border-gray-300 text-gray-900 placeholder-gray-500 h-14 text-lg focus:border-blue-500 focus:ring-blue-500"
-            />
-          </div>
-          <Button className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 text-white h-14 text-lg font-semibold mt-8 shadow-lg">
-            Sign Up
-          </Button>
+          <form className="space-y-8" onSubmit={handleSubmit}>
+            <div className="space-y-4">
+              <Label htmlFor="email" className="text-gray-700 text-lg font-medium">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                className="bg-white/80 border-gray-300 text-gray-900 placeholder-gray-500 h-14 text-lg focus:border-blue-500 focus:ring-blue-500"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                autoComplete="email"
+                required
+              />
+            </div>
+            <div className="space-y-4">
+              <Label htmlFor="password" className="text-gray-700 text-lg font-medium">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Create a password"
+                className="bg-white/80 border-gray-300 text-gray-900 placeholder-gray-500 h-14 text-lg focus:border-blue-500 focus:ring-blue-500"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                autoComplete="new-password"
+                required
+              />
+            </div>
+            {error && <div className="text-red-600 text-center text-lg">{error}</div>}
+            <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 text-white h-14 text-lg font-semibold mt-8 shadow-lg" disabled={loading}>
+              {loading ? 'Signing Up...' : 'Sign Up'}
+            </Button>
+          </form>
           <div className="relative py-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300"></div>
@@ -56,6 +89,7 @@ const SignUp = () => {
           <Button 
             variant="outline" 
             className="w-full border-2 border-gray-200 bg-white/80 text-gray-700 hover:bg-white hover:border-gray-300 h-14 text-lg font-medium transition-all duration-200 shadow-sm"
+            type="button"
           >
             <svg className="w-6 h-6 mr-4" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>

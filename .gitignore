@@ -1,2 +1,5 @@
 .DS_Store
 /backend/venv/
+.env
+/backend/alembic.ini
+/backend/.env
