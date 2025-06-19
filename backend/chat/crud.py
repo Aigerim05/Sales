@@ -5,6 +5,10 @@ from sqlalchemy.exc import IntegrityError
 
 from chat.model import Chat
 from auth.execptions import DatabaseException
+from sqlalchemy.orm.attribcrutes import flag_modified
+from message.model import Message
+import copy
+from datetime import datetime
 
 
 class ChatDAO:
@@ -47,3 +51,43 @@ class ChatDAO:
         except Exception as e:
             await db.rollback()
             raise DatabaseException(f"delete_chat: {str(e)}")
+
+    @staticmethod
+    async def append_message_to_chat(chat_id: int, message: dict, db: AsyncSession) -> Chat:
+        try:
+            chat = await ChatDAO.get_chat_by_id(chat_id, db)
+            if not chat:
+                raise DatabaseException(f"Chat with ID {chat_id} not found")
+
+            # Сохраняем в JSON (с ts в виде строки)
+            import copy
+            safe_message = copy.deepcopy(message)
+            if isinstance(safe_message.get("ts"), datetime):
+                safe_message["ts"] = safe_message["ts"].isoformat()
+
+            if not isinstance(chat.messages_json, list):
+                chat.messages_json = []
+            chat.messages_json.append(safe_message)
+            flag_modified(chat, "messages_json")
+
+            # Приводим datetime к naive
+            original_ts = message["ts"]
+            if original_ts.tzinfo is not None:
+                original_ts = original_ts.replace(tzinfo=None)
+
+            # Создаём запись в Message
+            from message.model import Message
+            message_row = Message(
+                chat_id=chat_id,
+                sender=message["role"],
+                content=message["content"],
+                created_at=original_ts  # now naive datetime
+            )
+            db.add(message_row)
+
+            await db.commit()
+            await db.refresh(chat)
+            return chat
+        except Exception as e:
+            await db.rollback()
+            raise DatabaseException(f"append_message_to_chat: {str(e)}")

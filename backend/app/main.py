@@ -6,8 +6,8 @@ from sqlalchemy import text
 
 from auth.api import router as auth_router
 from chat.routers import router as chat_router
-from message.routers import router as message_router
 from database import get_async_db
+from agent.router import router as simulator_router
 
 app = FastAPI(
     title="Sales API",
@@ -27,7 +27,8 @@ app.add_middleware(
 # Include routers
 app.include_router(auth_router)
 app.include_router(chat_router)
-app.include_router(message_router)
+app.include_router(simulator_router)
+
 
 @app.get("/")
 def read_root():

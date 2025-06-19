@@ -7,18 +7,21 @@ import { Message } from '@/types/Message';
 import ChatMessage from './ChatMessage';
 import EndSessionDialog from './EndSessionDialog';
 import RecordControls from './RecordControls';
+import { useSimulatorStore } from '@/store/useSimulatorStore';
 
 const FreeTrialChat = () => {
   const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([]);
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState('');
-  // const [simulatorData, setSimulatorData] = useState<any>(null);
+  const [simulatorData, setSimulatorData] = useState<any>(null);
   const [sessionStartTime] = useState(Date.now());
   const [showEndSessionDialog, setShowEndSessionDialog] = useState(false);
   const [sessionName, setSessionName] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
+  const { config, reset } = useSimulatorStore();
+  alert(JSON.stringify(config))
 
   const handleBack = () => {
     navigate('/free-trial/scenario');

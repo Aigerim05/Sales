@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -6,27 +5,27 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import ProgressIndicator from '@/components/ProgressIndicator';
+import { useSimulatorStore } from '@/store/useSimulatorStore';
+import { useState } from 'react';
 
 const FreeTrialSetup = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    offering: '',
-    background: ''
-  });
+  const setConfig = useSimulatorStore(state => state.setConfig);
+  const [offering, setOffering] = useState('');
+  const [background, setBackground] = useState('');
 
   const handleContinue = () => {
-    // Store form data in localStorage for the simulator flow
-    localStorage.setItem('simulatorSetup', JSON.stringify(formData));
+    setConfig({ offering, background });
     navigate('/free-trial/voice');
   };
 
-  const isFormValid = formData.offering.trim() && formData.background.trim();
+  const isFormValid = offering.trim() && background.trim();
 
   return (
-    <div className={"min-h-screen py-12 px-4 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"}>
+    <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <div className="container mx-auto max-w-2xl">
         <ProgressIndicator currentStep={1} totalSteps={4} />
-        
+
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-4 text-gray-900">
             Welcome to Your First{' '}
@@ -53,8 +52,8 @@ const FreeTrialSetup = () => {
               <Input
                 id="offering"
                 placeholder="e.g. Graphic design services, SaaS platform…"
-                value={formData.offering}
-                onChange={(e) => setFormData(prev => ({ ...prev, offering: e.target.value }))}
+                value={offering}
+                onChange={(e) => setOffering(e.target.value)}
                 className="bg-white border-gray-300 text-black placeholder-gray-500"
               />
             </div>
@@ -66,8 +65,8 @@ const FreeTrialSetup = () => {
               <Textarea
                 id="background"
                 placeholder="Your role, industry experience, goals…"
-                value={formData.background}
-                onChange={(e) => setFormData(prev => ({ ...prev, background: e.target.value }))}
+                value={background}
+                onChange={(e) => setBackground(e.target.value)}
                 className="min-h-[120px] bg-white border-gray-300 text-black placeholder-gray-500"
               />
             </div>
