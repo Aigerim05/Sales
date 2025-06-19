@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 
 from chat.model import Chat
 from auth.execptions import DatabaseException
-from sqlalchemy.orm.attribcrutes import flag_modified
+from sqlalchemy.orm.attributes import flag_modified
 from message.model import Message
 import copy
 from datetime import datetime

@@ -5,8 +5,10 @@ class Settings(BaseSettings):
     DATABASE_URL: str
     SYNC_DATABASE_URL: str
     SECRET_KEY: str
+    GOOGLE_API_KEY: str
     algorithm: str
     access_token_expire_minutes: int
+    # frontend_url: str
     # redis_url: str = "redis://localhost:6379/0"
     # celery_broker_url: str = "redis://localhost:6379/0"
     # celery_result_backend: str = "redis://localhost:6379/0"

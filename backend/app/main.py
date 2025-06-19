@@ -7,7 +7,7 @@ from sqlalchemy import text
 from auth.api import router as auth_router
 from chat.routers import router as chat_router
 from database import get_async_db
-from agent.router import router as simulator_router
+from agent.routers import router as simulator_router
 
 app = FastAPI(
     title="Sales API",
