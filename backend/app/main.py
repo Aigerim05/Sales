@@ -5,6 +5,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
 
 from auth.api import router as auth_router
+from chat.routers import router as chat_router
+from message.routers import router as message_router
 from database import get_async_db
 
 app = FastAPI(
@@ -16,7 +18,7 @@ app = FastAPI(
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8080"],  
+    allow_origins=["http://localhost:8080"],  # frontend
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,16 +26,18 @@ app.add_middleware(
 
 # Include routers
 app.include_router(auth_router)
+app.include_router(chat_router)
+app.include_router(message_router)
 
 @app.get("/")
 def read_root():
     return {"message": "Hello, FastAPI!"}
-    
+
 @app.get("/health")
 async def check_health(db: AsyncSession = Depends(get_async_db)):
     try:
         result = await db.execute(text("SELECT 1"))
-        result.fetchone() 
+        result.fetchone()
         return {
             "status": "ok",
             "database": "connected",

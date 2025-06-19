@@ -17,6 +17,8 @@ if config.config_file_name is not None:
 
 
 from auth.db_models import Base
+from chat.model import Chat
+from message.model import Message
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
